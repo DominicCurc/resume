@@ -15,10 +15,18 @@ module.exports = merge(common, {
   },
   optimization: {
     minimizer: [
-      new OptimizeCssAssetsPlugin(),
+      new CssMinimizerPlugin(),
       new TerserPlugin(),
+    ],
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CssMinimizerPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
       new HtmlWebpackPlugin({
-        template: "./src/template.html",
+        template: "./src/index.html",
         favicon: "./src/assets/favicon.png",
         minify: {
           removeAttributeQuotes: true,
@@ -26,13 +34,6 @@ module.exports = merge(common, {
           removeComments: true,
         },
       }),
-    ],
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
-    }),
   ],
   module: {
     rules: [
